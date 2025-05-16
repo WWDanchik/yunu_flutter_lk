@@ -158,7 +158,7 @@ class ApiClient {
             throw ApiException(errors);
           },
           ok: (_, result) {
-            return fromJson(result);
+            return result;
           },
         );
       }
