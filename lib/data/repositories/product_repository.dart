@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:yunu_lk_flutter/core/api/api_client.dart';
+import 'package:yunu_lk_flutter/core/api/client/api_client.dart';
 import 'package:yunu_lk_flutter/data/models/api_response.dart';
 import 'package:yunu_lk_flutter/data/models/product/marketplace_sku_relations_result.dart';
 import 'package:yunu_lk_flutter/data/models/product/product.dart';
