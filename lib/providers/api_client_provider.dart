@@ -3,11 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:yunu_lk_flutter/core/api/api_client.dart';
 import 'package:yunu_lk_flutter/core/api/api_config.dart';
+import 'package:yunu_lk_flutter/viewmodels/auth/auth_notifier.dart';
 
 part 'api_client_provider.g.dart';
 
 @riverpod
 ApiClient apiClient(Ref ref) {
   final baseUrl = dotenv.get('BASE_URL');
-  return ApiClient(config: ApiConfig(baseUrl: baseUrl));
+  final auth = ref.read(authNotifierProvider.notifier);
+
+  return ApiClient(
+    config: ApiConfig(
+      baseUrl: baseUrl,
+      onAuthError: () {
+        auth.logOut();
+      },
+    ),
+  );
 }

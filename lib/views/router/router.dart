@@ -14,8 +14,25 @@ part 'router.g.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 const publicRoutes = <String>['/login', '/forgot_password'];
-
 const privateRoutes = <String>['/dashboard', '/vendor'];
+
+class AppRoutes {
+  static const dashboard = "/dashboard";
+  static const login = "/login";
+  static const vendor = "vendor";
+  static const forgotPassword = "/forgot_password";
+  static const productList = "/product/list";
+
+  static const List<String> public = [login, forgotPassword];
+  static const List<String> private = [dashboard, vendor, productList];
+  static const List<String> allRoutes = [
+    dashboard,
+    login,
+    vendor,
+    forgotPassword,
+    productList,
+  ];
+}
 
 @riverpod
 GoRouter goRouter(Ref ref) {
@@ -46,17 +63,21 @@ GoRouter goRouter(Ref ref) {
       ),
     ],
     redirect: (context, state) {
-      final location = state.fullPath;
+      final location = state.matchedLocation;
 
-      final isPublic = publicRoutes.contains(location);
-      final isPrivate = privateRoutes.contains(location);
-
-      if (!loggedIn && isPrivate) {
-        return '/login';
+      if (!loggedIn &&
+          AppRoutes.private.any(
+            (route) => location == route || location.startsWith('$route/'),
+          )) {
+        return AppRoutes.login;
       }
 
-      if (loggedIn && isPublic) {
-        return '/dashboard';
+      if (loggedIn && AppRoutes.public.contains(location)) {
+        return AppRoutes.dashboard;
+      }
+
+      if (!AppRoutes.allRoutes.contains(location)) {
+        return loggedIn ? AppRoutes.dashboard : AppRoutes.login;
       }
 
       return null;

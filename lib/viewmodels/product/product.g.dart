@@ -557,7 +557,7 @@ class _MarketplaceSkuRelationsResultProviderElement
 }
 
 String _$productDetailControllerHash() =>
-    r'9fbf1d548eb2202fc9f9a36bb1988bd42dd34d02';
+    r'e08624f6893d0a9f604d8bab4d231486d8127e3b';
 
 abstract class _$ProductDetailController
     extends BuildlessAutoDisposeAsyncNotifier<ProductDetailState> {

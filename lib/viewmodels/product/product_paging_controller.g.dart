@@ -7,7 +7,7 @@ part of 'product_paging_controller.dart';
 // **************************************************************************
 
 String _$productPagingControllerHash() =>
-    r'47104d247bf29854507f490a944382266997165d';
+    r'b6304fac9d67713d873aeb26820a464a13d6d129';
 
 /// See also [productPagingController].
 @ProviderFor(productPagingController)

@@ -320,3 +320,97 @@ class Photo with _$Photo {
 
   factory Photo.fromJson(Map<String, dynamic> json) => _$PhotoFromJson(json);
 }
+
+extension ProductDetailFormDataExtension on ProductDetail {
+  Map<String, dynamic> toFormData() {
+    final Map<String, dynamic> data = {};
+
+    // data['id'] = id;
+    // data['type'] = type;
+    // data['article'] = article;
+    // data['category_id'] = categoryId;
+    data['name'] = name;
+    // data['price'] = price;
+    // data['old_price'] = oldPrice;
+    // data['quantity'] = quantity;
+    // data['WB_FBO'] = wbFbo;
+    // data['photo'] = photo;
+    // data['reserve'] = reserve;
+    // data['marriage'] = marriage;
+    // data['is_fragile'] = isFragile ? 1 : 0;
+    // data['is_with_video_record'] = isWithVideoRecord ? 1 : 0;
+    // data['is_required_cis'] = isRequiredCis ? 1 : 0;
+    // data['instruction_link'] = instructionLink;
+    // data['instruction_text'] = instructionText;
+    // data['is_box'] = isBox ? 1 : 0;
+    // data['is_pack_in_bubble_wrap'] = isPackInBubbleWrap ? 1 : 0;
+    // data['is_pack_in_cardboard'] = isPackInCardboard ? 1 : 0;
+    // data['is_hidden'] = isHidden ? 1 : 0;
+    // data['is_fifo'] = isFifo ? 1 : 0;
+    // data['is_dimensions_diff'] = isDimensionsDiff ? 1 : 0;
+    // data['country'] = country;
+    // data['weight'] = weight;
+    // data['measured_in_warehouse'] = measuredInWarehouse ? 1 : 0;
+    // data['height'] = height;
+    // data['width'] = width;
+    // data['length'] = length;
+    // data['volume'] = volume;
+    // data['comission'] = comission;
+    // data['foreign_purchase_price'] = foreignPurchasePrice;
+    // data['foreign_purchase_price_currency_symbol'] =
+    //     foreignPurchasePriceCurrencySymbol;
+    // data['foreign_delivery_price'] = foreignDeliveryPrice;
+    // data['foreign_delivery_price_currency_symbol'] =
+    //     foreignDeliveryPriceCurrencySymbol;
+    // data['description'] = description;
+    // data['manufacturer'] = manufacturer;
+    // data['can_be_removed'] = canBeRemoved ? 1 : 0;
+
+    // // Handle marketplaces
+    // data['marketplaces[YANDEX_MARKET_FBS]'] =
+    //     marketplaces.yandexMarketFbs.toString().split('.').last;
+    // data['marketplaces[YANDEX_MARKET_FBS_FAST]'] =
+    //     marketplaces.yandexMarketFbsFast.toString().split('.').last;
+    // data['marketplaces[WILDBERRIES_FBS]'] =
+    //     marketplaces.wildberriesFbs.toString().split('.').last;
+    // data['marketplaces[OZON_FBS]'] =
+    //     marketplaces.ozonFbs.toString().split('.').last;
+    // data['marketplaces[OZON_REAL_FBS_EXPRESS]'] =
+    //     marketplaces.ozonRealFbsExpress.toString().split('.').last;
+    // data['marketplaces[SBER_FBS]'] =
+    //     marketplaces.sberFbs.toString().split('.').last;
+
+    // // Handle articles as array
+    // for (int i = 0; i < articles.length; i++) {
+    //   data['articles[$i][article]'] = articles[i].article;
+    //   data['articles[$i][is_main]'] = articles[i].isMain ? 1 : 0;
+    // }
+
+    // // Handle barcodes as array
+    // for (int i = 0; i < barcodes.length; i++) {
+    //   data['barcodes[$i]'] = barcodes[i];
+    // }
+
+    // // Handle photos as array
+    // for (int i = 0; i < photos.length; i++) {
+    //   if (photos[i].id != null) {
+    //     data['photos[$i][id]'] = photos[i].id;
+    //   }
+    //   data['photos[$i][file]'] = photos[i].file;
+    //   data['photos[$i][is_main]'] = photos[i].isMain ? 1 : 0;
+    // }
+
+    // // Handle child products if any
+    // if (childProducts != null && childProducts!.isNotEmpty) {
+    //   for (int i = 0; i < childProducts!.length; i++) {
+    //     data['child_products[$i][id]'] = childProducts![i].id;
+    //     data['child_products[$i][uid]'] = childProducts![i].uid;
+    //     data['child_products[$i][name]'] = childProducts![i].name;
+    //     data['child_products[$i][count]'] = childProducts![i].count;
+    //     data['child_products[$i][is_box]'] = childProducts![i].isBox;
+    //   }
+    // }
+
+    return data;
+  }
+}

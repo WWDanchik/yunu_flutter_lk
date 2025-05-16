@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:yunu_lk_flutter/core/api/error/api_error_type.dart';
 import 'package:yunu_lk_flutter/data/models/api_response.dart';
 import 'package:yunu_lk_flutter/data/models/refresh_result.dart';
 import 'package:yunu_lk_flutter/services/auth_service.dart';
@@ -33,7 +34,9 @@ class AuthInterceptor extends QueuedInterceptor {
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final tokenPair = await _authService.getTokenPair();
 
     if (tokenPair == null) {
@@ -60,15 +63,13 @@ class AuthInterceptor extends QueuedInterceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) async {
     try {
-      final data = ApiResponse.fromJson(
-        response.data,
-        (json) => json,
-      );
+      final data = ApiResponse.fromJson(response.data, (json) => json);
 
       await data.when(
         error: (status, errors) async {
-          final hasAuthError =
-              errors.any((e) => e.code == ApiErrorType.authenticationError);
+          final hasAuthError = errors.any(
+            (e) => e.code == ApiErrorType.authenticationError,
+          );
 
           if (!hasAuthError) {
             return handler.next(response);
@@ -157,9 +158,10 @@ class AuthInterceptor extends QueuedInterceptor {
     return _retryClient.request<R>(
       requestOptions.path,
       cancelToken: requestOptions.cancelToken,
-      data: requestOptions.data is FormData
-          ? (requestOptions.data as FormData).clone()
-          : requestOptions.data,
+      data:
+          requestOptions.data is FormData
+              ? (requestOptions.data as FormData).clone()
+              : requestOptions.data,
       onReceiveProgress: requestOptions.onReceiveProgress,
       onSendProgress: requestOptions.onSendProgress,
       queryParameters: requestOptions.queryParameters,

@@ -85,9 +85,10 @@ class ProductDetailController extends _$ProductDetailController {
       state = const AsyncValue.loading();
 
       try {
+        FormData formData = FormData.fromMap({'name': 'John Doe'});
         final updatedDetail = await repositories.productRepository.update(
           currentDetail.id,
-          FormData.fromMap(currentDetail.toJson()),
+          formData,
         );
 
         _originalDetail = updatedDetail;
