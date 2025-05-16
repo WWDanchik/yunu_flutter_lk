@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:logger/web.dart';
 import 'package:yunu_lk_flutter/core/api/client/api_config.dart';
-import 'package:yunu_lk_flutter/core/api/error/api_error.dart';
 import 'package:yunu_lk_flutter/core/api/error/api_exception.dart';
 import 'package:yunu_lk_flutter/core/api/interceptors/auth_interceptor.dart';
 import 'package:yunu_lk_flutter/data/models/api_response.dart';
@@ -65,11 +64,15 @@ class ApiClient {
   Future<T> get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
     void Function(int, int)? onReceiveProgress,
   }) async {
     final response = await _dio.get(
       path,
       queryParameters: queryParameters,
+      options: options,
+      cancelToken: cancelToken,
       onReceiveProgress: onReceiveProgress,
     );
     return response.data;
@@ -79,15 +82,19 @@ class ApiClient {
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    void Function(int, int)? onSendProgress,
     Options? options,
+    CancelToken? cancelToken,
+    void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     final response = await _dio.post(
       path,
       data: data,
       queryParameters: queryParameters,
-      onSendProgress: onSendProgress,
       options: options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
     );
 
     return response.data;
@@ -97,13 +104,19 @@ class ApiClient {
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
+    Options? options,
+    CancelToken? cancelToken,
     void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
   }) async {
     final response = await _dio.put(
       path,
       data: data,
       queryParameters: queryParameters,
       onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+      options: options,
+      cancelToken: cancelToken,
     );
     return response.data;
   }
@@ -113,12 +126,18 @@ class ApiClient {
     dynamic data,
     Map<String, dynamic>? queryParameters,
     void Function(int, int)? onSendProgress,
+    void Function(int, int)? onReceiveProgress,
+    Options? options,
+    CancelToken? cancelToken,
   }) async {
     final response = await _dio.patch(
       path,
       data: data,
       queryParameters: queryParameters,
       onSendProgress: onSendProgress,
+      cancelToken: cancelToken,
+      options: options,
+      onReceiveProgress: onReceiveProgress,
     );
     return response.data;
   }
