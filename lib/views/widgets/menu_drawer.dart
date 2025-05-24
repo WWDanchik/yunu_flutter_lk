@@ -20,21 +20,15 @@ class MenuDrawer extends ConsumerWidget {
     return Drawer(
       child: Column(
         children: [
-          SizedBox(
-            height: 80,
-          ),
-          YunuLogo(
-            width: 40,
-            height: 40,
-          ),
+          SizedBox(height: 80),
+          YunuLogo(width: 40, height: 40),
           FilledButton(
-              onPressed: () {
-                auth.logOut();
-              },
-              child: Text("Выход")),
-          SizedBox(
-            height: 30,
+            onPressed: () {
+              auth.logOut();
+            },
+            child: Text("Выход"),
           ),
+          SizedBox(height: 30),
           Expanded(
             child: ListView(
               padding: EdgeInsets.only(top: 8, left: 8, right: 8),
@@ -66,8 +60,9 @@ class MenuDrawer extends ConsumerWidget {
                   ),
                   title: const Text('Оплаты по заказам'),
                   shape: const RoundedRectangleBorder(side: BorderSide.none),
-                  collapsedShape:
-                      const RoundedRectangleBorder(side: BorderSide.none),
+                  collapsedShape: const RoundedRectangleBorder(
+                    side: BorderSide.none,
+                  ),
                   children: [
                     _buildSubItem('Все оплаты', () {
                       Navigator.pop(context);
@@ -85,6 +80,16 @@ class MenuDrawer extends ConsumerWidget {
                   onTap: () {
                     Navigator.pop(context);
                     context.push("/product/list");
+                  },
+                ),
+                SizedBox(height: 8),
+                _buildDrawerItem(
+                  icon: Icons.local_shipping,
+                  title: 'Поставщики',
+                  selected: selectedIndex == 2,
+                  onTap: () {
+                    Navigator.pop(context);
+                    context.push("/vendor");
                   },
                 ),
               ],
@@ -127,9 +132,6 @@ class MenuDrawer extends ConsumerWidget {
   }
 
   Widget _buildSubItem(String title, VoidCallback onTap) {
-    return ListTile(
-      title: Text(title),
-      onTap: onTap,
-    );
+    return ListTile(title: Text(title), onTap: onTap);
   }
 }

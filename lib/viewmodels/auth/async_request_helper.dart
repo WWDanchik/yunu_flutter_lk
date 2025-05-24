@@ -1,4 +1,5 @@
 import 'package:riverpod/riverpod.dart';
+import 'package:yunu_lk_flutter/core/api/error/api_error.dart';
 
 import '../../data/models/api_response.dart';
 

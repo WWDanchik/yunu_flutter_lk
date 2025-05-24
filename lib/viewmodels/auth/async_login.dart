@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:yunu_lk_flutter/core/api/error/api_error.dart';
 import 'package:yunu_lk_flutter/data/models/api_response.dart';
 import 'package:yunu_lk_flutter/data/models/login_result.dart';
 import 'package:yunu_lk_flutter/providers/auth_repository_provider.dart';
@@ -20,18 +21,20 @@ class AsyncLogin extends _$AsyncLogin {
   Future<ApiResponse<LoginResult>> login(String email, String password) async {
     state = const AsyncValue.loading();
 
-    final asyncResponse =
-        await AsyncValue.guard<ApiResponse<LoginResult>>(() async {
-      final loginResponse = _login(email, password);
+    final asyncResponse = await AsyncValue.guard<ApiResponse<LoginResult>>(
+      () async {
+        final loginResponse = _login(email, password);
 
-      return loginResponse;
-    });
+        return loginResponse;
+      },
+    );
 
     state = asyncResponse;
 
     if (asyncResponse.hasError) {
       return ApiResponse.error(
-          errors: [ApiError(message: asyncResponse.error.toString())]);
+        errors: [ApiError(message: asyncResponse.error.toString())],
+      );
     }
 
     return asyncResponse.value!;

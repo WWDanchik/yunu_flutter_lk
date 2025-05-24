@@ -19,7 +19,7 @@ const privateRoutes = <String>['/dashboard', '/vendor'];
 class AppRoutes {
   static const dashboard = "/dashboard";
   static const login = "/login";
-  static const vendor = "vendor";
+  static const vendor = "/vendor";
   static const forgotPassword = "/forgot_password";
   static const productList = "/product/list";
 
@@ -60,6 +60,11 @@ GoRouter goRouter(Ref ref) {
         path: '/product/list',
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => const ProductsListScreen(),
+      ),
+      GoRoute(
+        path: '/vendor',
+        parentNavigatorKey: rootNavigatorKey,
+        builder: (context, state) => const VendorScreen(),
       ),
     ],
     redirect: (context, state) {

@@ -4,6 +4,7 @@ import 'package:yunu_lk_flutter/data/repositories/category_repository.dart';
 import 'package:yunu_lk_flutter/data/repositories/marketplace_repository.dart';
 import 'package:yunu_lk_flutter/data/repositories/product_repository.dart';
 import 'package:yunu_lk_flutter/data/repositories/statistic_repository.dart';
+import 'package:yunu_lk_flutter/data/repositories/vendor_repository.dart';
 
 class RepositoryFactory {
   final ApiClient apiClient;
@@ -21,4 +22,6 @@ class RepositoryFactory {
       MarketplaceRepository(apiClient: apiClient);
   StatisticRepository get statisticRepository =>
       StatisticRepository(apiClient: apiClient);
+  VendorRepository get vendorRepository =>
+      VendorRepository(apiClient: apiClient);
 }

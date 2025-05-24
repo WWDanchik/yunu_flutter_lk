@@ -3,12 +3,12 @@ import 'package:logger/web.dart';
 import 'package:yunu_lk_flutter/core/api/client/api_config.dart';
 import 'package:yunu_lk_flutter/core/api/error/api_exception.dart';
 import 'package:yunu_lk_flutter/core/api/interceptors/auth_interceptor.dart';
+import 'package:yunu_lk_flutter/core/api/interceptors/logging_interceptor.dart';
 import 'package:yunu_lk_flutter/data/models/api_response.dart';
 import 'package:yunu_lk_flutter/services/auth_service.dart';
 
 class ApiClient {
   final Dio _dio;
-  static const String baseUrl = 'https://jsonplaceholder.typicode.com';
   final Logger _logger;
   final AuthService _authService;
   ApiClient({required ApiConfig config})
@@ -19,39 +19,16 @@ class ApiClient {
         ),
       ),
       _authService = AuthService(),
-      _logger = Logger(printer: PrettyPrinter()) {
-    _dio.interceptors.add(
-      InterceptorsWrapper(
-        onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
-          _logger.i("REQUEST: ${options.method} ${options.uri}");
-          if (config.onRequest != null) {
-            config.onRequest!(options, handler);
-          }
-
-          handler.next(options);
-        },
-        onResponse: (Response response, ResponseInterceptorHandler handler) {
-          _logger.d("RESPONSE: ${response.statusCode} ${response.data}");
-          if (config.onResponse != null) {
-            config.onResponse!(response, handler);
-          }
-
-          handler.next(response);
-        },
-        onError: (DioException error, ErrorInterceptorHandler handler) {
-          _logger.e(
-            "ERROR: ${error.message}",
-            error: error.message,
-            stackTrace: error.stackTrace,
-          );
-          if (config.onError != null) {
-            config.onError!(error, handler);
-          }
-
-          handler.next(error);
-        },
-      ),
-    );
+      _logger = Logger(
+        printer: PrettyPrinter(
+          methodCount: 0,
+          errorMethodCount: 8,
+          lineLength: 120,
+          colors: true,
+          printEmojis: true,
+        ),
+      ) {
+    _dio.interceptors.add(LoggingInterceptor(logger: _logger));
     _dio.interceptors.add(
       AuthInterceptor(
         authService: _authService,
@@ -66,7 +43,7 @@ class ApiClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
-    void Function(int, int)? onReceiveProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     final response = await _dio.get(
       path,
@@ -84,8 +61,8 @@ class ApiClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
-    void Function(int, int)? onSendProgress,
-    void Function(int, int)? onReceiveProgress,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     final response = await _dio.post(
       path,
@@ -106,8 +83,8 @@ class ApiClient {
     Map<String, dynamic>? queryParameters,
     Options? options,
     CancelToken? cancelToken,
-    void Function(int, int)? onSendProgress,
-    void Function(int, int)? onReceiveProgress,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
     final response = await _dio.put(
       path,
@@ -125,8 +102,8 @@ class ApiClient {
     String path, {
     dynamic data,
     Map<String, dynamic>? queryParameters,
-    void Function(int, int)? onSendProgress,
-    void Function(int, int)? onReceiveProgress,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
     Options? options,
     CancelToken? cancelToken,
   }) async {
